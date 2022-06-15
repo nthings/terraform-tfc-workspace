@@ -14,7 +14,7 @@ resource "tfe_workspace" "this" {
 }
 
 resource "tfe_variable" "workspace_variables" {
-  for_each     = { for key, value in var.workspace_variables : key => value if type(value) != "list" && type(value) != "object" }
+  for_each     = { for key, value in var.workspace_variables : key => value }
   key          = each.value
   value        = each.key
   category     = "terraform"
