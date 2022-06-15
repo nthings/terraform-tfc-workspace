@@ -20,7 +20,37 @@ resource "tfe_variable" "workspace_variables_maps_hcl" {
   value        = <<EOT
                   {
                     %{for key, value in each.value~}
-                    ${key} = "${value}"
+
+                    %{if can(tomap(value))~}
+                      %{for nested_key, nested_value in value~}
+
+                      %{if can(tolist(value))~}
+                        ${key} = "${jsonencode(value)}"
+                      %{endif~}
+                      
+                      %{if can(tostring(nested_value))~}
+                        ${nested_key} = "${nested_value}"
+                      %{endif~}
+
+                      %{if can(tonumber(nested_value))~}
+                        ${nested_key} = ${nested_value}
+                      %{endif~}
+
+                      %{endfor~}
+                    %{endif~}
+
+                    %{if can(tolist(value))~}
+                      ${key} = "${jsonencode(value)}"
+                    %{endif~}
+
+                    %{if can(tostring(value))~}
+                      ${key} = "${value}"
+                    %{endif~}
+
+                    %{if can(tonumber(value))~}
+                      ${key} = ${value}
+                    %{endif~}
+
                     %{endfor~}
                   }
                   EOT
