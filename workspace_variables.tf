@@ -1,7 +1,7 @@
 locals {
   workspace_variables_non_hcl   = { for key, value in var.workspace_variables : key => value if can(tostring(value)) || can(tonumber(value)) }
-  workspace_variables_maps_hcl  = { for key, value in var.workspace_variables : key => value if can(tomap(value)) }
-  workspace_variables_lists_hcl = { for key, value in var.workspace_variables : key => value if can(tolist(value)) }
+  workspace_variables_maps_hcl  = { for key, value in var.workspace_variables : key => tomap(value) if can(tomap(value)) }
+  workspace_variables_lists_hcl = { for key, value in var.workspace_variables : key => tolist(value) if can(tolist(value)) }
 }
 
 resource "tfe_variable" "workspace_variables_non_hcl" {
