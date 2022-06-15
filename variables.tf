@@ -55,9 +55,11 @@ variable "oauth_token_id" {
 }
 
 variable "workspace_variables" {
+  default     = {}
   description = "Variables to save on the workspace."
 }
 
 variable "complex_workspace_variables" {
+  default     = {}
   description = "Complex types variables to save on the workspace. Ex: maps with n levels are saved as string"
 }
