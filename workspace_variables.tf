@@ -21,9 +21,9 @@ resource "tfe_variable" "workspace_variables_maps_hcl" {
                   {
                     %{for key, value in each.value~}
 
-                    %{if can(tomap(nested_value))~}
+                    %{if can(tomap(value))~}
                       %{for nested_key, nested_value in value~}
-
+                        
                       %{if can(tolist(nested_value))~}
                         ${nested_key} = "${jsonencode(nested_value)}"
                       %{endif~}
