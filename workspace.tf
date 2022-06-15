@@ -12,13 +12,3 @@ resource "tfe_workspace" "this" {
     oauth_token_id = var.oauth_token_id
   }
 }
-
-resource "tfe_variable" "workspace_variables" {
-  for_each     = { for key, value in var.workspace_variables : key => value }
-  key          = each.value
-  value        = each.key
-  category     = "terraform"
-  hcl          = false
-  workspace_id = tfe_workspace.this.id
-  sensitive    = false
-}
