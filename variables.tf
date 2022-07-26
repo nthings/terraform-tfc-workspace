@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "organization" {
-  description = "Name of the organization in TFC"
+  description = "Name of the organization in TFE"
   type        = string
 }
 
